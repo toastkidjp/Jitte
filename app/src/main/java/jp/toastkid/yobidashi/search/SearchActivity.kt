@@ -19,12 +19,15 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.webkit.WebViewClient
 import android.widget.EditText
 import android.widget.Spinner
 import io.reactivex.Completable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import jp.toastkid.yobidashi.BaseActivity
 import jp.toastkid.yobidashi.R
 import jp.toastkid.yobidashi.databinding.*
@@ -46,6 +49,7 @@ import jp.toastkid.yobidashi.search.url_suggestion.UrlSuggestionModule
 import jp.toastkid.yobidashi.search.voice.VoiceSearch
 import jp.toastkid.yobidashi.settings.SettingsActivity
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 /**
  * Search activity.
@@ -101,6 +105,8 @@ class SearchActivity : BaseActivity(),
      * Without exit animation flag.
      */
     private var withoutExitAnimation: Boolean = false
+
+    private val inputSubject: PublishSubject<String> = PublishSubject.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,6 +172,19 @@ class SearchActivity : BaseActivity(),
                 getString(R.string.message_search_on_background),
                 colorPair()
                 )
+
+        binding?.webView?.webViewClient = object : WebViewClient() {}
+
+        inputSubject
+                .distinctUntilChanged()
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .map { UrlFactory.make(this, binding?.searchCategories?.selectedItem.toString(), it) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { binding?.webView?.loadUrl(it.toString()) },
+                        Timber::e
+                )
+                .addTo(disposables)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -276,6 +295,7 @@ class SearchActivity : BaseActivity(),
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
 
                     val key = s.toString()
+                    inputSubject.onNext(key)
 
                     setActionButtonState(key.isEmpty())
 
