@@ -418,5 +418,6 @@
     <string name="title_menu_reader_mode">リーダーモード</string>
     <string name="launcher">アプリ起動</string>
     <string name="barcode">バーコード</string>
+    <string name="title_calculator">電卓</string>
 
 </resources>

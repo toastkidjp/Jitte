@@ -82,6 +82,8 @@ enum class Menu(
 
     OVERLAY_COLOR_FILTER(R.string.title_filter_color, R.drawable.ic_color_filter),
 
+    CALCULATOR(R.string.title_calculator, R.drawable.ic_calculator),
+
     ABOUT(R.string.title_about_this_app, R.drawable.ic_yobidashi),
 
     EXIT(R.string.exit, R.drawable.ic_exit)

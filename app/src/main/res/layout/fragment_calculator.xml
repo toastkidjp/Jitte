@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable name="fragment" type="jp.toastkid.yobidashi.tool.calculator.CalculatorDialogFragment" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:id="@+id/display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <EditText
+            android:id="@+id/input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintTop_toBottomOf="@id/display"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Button
+            android:id="@+id/plus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            app:layout_constraintTop_toBottomOf="@id/input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            android:onClick="@{view -> fragment.plus()}"
+            />
+
+        <Button
+            android:id="@+id/minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            app:layout_constraintTop_toBottomOf="@id/input"
+            app:layout_constraintStart_toEndOf="@id/plus"
+            app:layout_constraintHorizontal_weight="1"
+            android:onClick="@{view -> fragment.minus()}"
+            />
+
+        <Button
+            android:id="@+id/multiply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="x"
+            app:layout_constraintTop_toBottomOf="@id/input"
+            app:layout_constraintStart_toEndOf="@id/minus"
+            app:layout_constraintHorizontal_weight="1"
+            android:onClick="@{view -> fragment.multiply()}"
+            />
+
+        <Button
+            android:id="@+id/divide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            app:layout_constraintTop_toBottomOf="@id/input"
+            app:layout_constraintStart_toEndOf="@id/multiply"
+            app:layout_constraintHorizontal_weight="1"
+            android:onClick="@{view -> fragment.divide()}"
+            />
+
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C"
+            app:layout_constraintTop_toBottomOf="@id/plus"
+            app:layout_constraintStart_toStartOf="@id/plus"
+            android:onClick="@{view -> fragment.clear()}"
+            />
+
+        <Button
+            android:id="@+id/copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Copy"
+            app:layout_constraintTop_toBottomOf="@id/minus"
+            app:layout_constraintStart_toStartOf="@id/minus"
+            android:onClick="@{view -> fragment.clip()}"
+            />
+
+        <Button
+            android:id="@+id/power"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Power"
+            app:layout_constraintTop_toBottomOf="@id/multiply"
+            app:layout_constraintStart_toStartOf="@id/multiply"
+            android:onClick="@{view -> fragment.power()}"
+            />
+
+        <Button
+            android:id="@+id/equal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="="
+            app:layout_constraintTop_toBottomOf="@id/divide"
+            app:layout_constraintStart_toStartOf="@id/divide"
+            android:onClick="@{view -> fragment.equal()}"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
